@@ -7,7 +7,22 @@ module.exports = function validateRegisterInput(data) {
     data.email = !isEmpty(data.email) ? data.email : "";
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
+    data.gender= !isEmpty(data.gender) ? data.gender : "";
+
     data.userType = !isEmpty(data.userType) ? data.userType : "";
+
+    data.dateOfBirth = !isEmpty(data.dateOfBirth) ? data.dateOfBirth : "";
+
+    data.weightInKgs = !isEmpty(data.weightInKgs) ? data.weightInKgs : "";
+
+    data.heightInCms = !isEmpty(data.heightInCms) ? data.heightInCms : "";
+
+    data.userType = !isEmpty(data.userType) ? data.userType : "";
+    data.trainer = !isEmpty(data.trainer) ? data.trainer : "";
+    data.about = !isEmpty(data.about) ? data.about : "";
+
+
+
 
 // Name checks
     if (Validator.isEmpty(data.name)) {
@@ -20,8 +35,25 @@ module.exports = function validateRegisterInput(data) {
         errors.email = "Email is invalid";
     }
     // userType check
+    if (Validator.isEmpty(data.gender)) {
+        errors.gender = "Gender Type field is required";
+    }
+
+
+    if (Validator.isEmpty(data.dateOfBirth)) {
+        errors.dateOfBirth = "Date of birth Type field is required";
+    }
+    if (Validator.isEmpty(data.weightInKgs)) {
+        errors.weightInKgs = "Weight Type field is required";
+    }
+    if (Validator.isEmpty(data.heightInCms)) {
+        errors.heightInCms = "Height Type field is required";
+    }
     if (Validator.isEmpty(data.userType)) {
         errors.userType = "User Type field is required";
+    }
+    if (Validator.isEmpty(data.about)) {
+        errors.about = "User Bio field is required";
     }
 
 // Password checks

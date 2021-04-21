@@ -14,13 +14,32 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    gender:{
+        type:String
+    },
+    dateOfBirth:{
+        type:Date
+    },
+    weightInKgs:{
+        type:Number
+    },
+    heightInCms:{
+        type:Number
+    },
     userType:{
         type: String,
         required: true
+    },
+    trainer:{
+        type:String,
+    },
+    about:{
+        type:String
     },
     date: {
         type: Date,
         default: Date.now
     }
+
 });
 module.exports = User = mongoose.model("users", UserSchema);

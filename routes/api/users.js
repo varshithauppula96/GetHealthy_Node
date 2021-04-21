@@ -12,6 +12,30 @@ const User = require("../../models/User");
 // @route POST api/users/register
 // @desc Register user
 // @access Public
+router.get("/", async (req, res) => {
+    try {
+        const users = await User.find()
+
+        res.json(users)
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
+
+router.get("/:userId", async (req, res) => {
+    try {
+        const userId = req.params['userId'];
+        const user = await User.findById(userId)
+
+        res.send(user)
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
 router.post("/register", (req, res) => {
     // Form validation
     const { errors, isValid } = validateRegisterInput(req.body);
@@ -27,7 +51,13 @@ router.post("/register", (req, res) => {
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
-                userType:req.body.userType
+                gender:req.body.gender,
+                dateOfBirth:req.body.dateOfBirth,
+                weightInKgs:req.body.weightInKgs,
+                heightInCms:req.body.heightInCms,
+                userType:req.body.userType,
+                trainer:req.body.trainer,
+                about:req.body.about
             });
 // Hash password before saving in database
             bcrypt.genSalt(10, (err, salt) => {
@@ -69,7 +99,14 @@ router.post("/login", (req, res) => {
                 const payload = {
                     id: user.id,
                     name: user.name,
-                    userType:user.userType
+                    email:user.email,
+                    gender:user.gender,
+                    dateOfBirth:user.dateOfBirth,
+                    weightInKgs:user.weightInKgs,
+                    heightInCms:user.heightInCms,
+                    userType:user.userType,
+                    trainer:user.trainer,
+                    about:user.about
                 };
 // Sign token
                 jwt.sign(
