@@ -24,6 +24,19 @@ router.get("/", async (req, res) => {
     }
 })
 
+router.get("/:trainer", async (req, res) => {
+    try {
+        const trainer = await User.find({userType : "Trainer"})
+        res.send(trainer)
+
+
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
+
 router.get("/:userId", async (req, res) => {
     try {
         const userId = req.params['userId'];
