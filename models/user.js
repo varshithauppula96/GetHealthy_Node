@@ -15,7 +15,7 @@ const UserSchema = new Schema({
         required: true
     },
     gender:{
-        type:String
+        type:String,
     },
     dateOfBirth:{
         type:Date
@@ -30,8 +30,9 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    trainer:{
+    trainerId:{
         type:String,
+        required: true
     },
     about:{
         type:String

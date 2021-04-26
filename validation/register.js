@@ -18,7 +18,7 @@ module.exports = function validateRegisterInput(data) {
     data.heightInCms = !isEmpty(data.heightInCms) ? data.heightInCms : "";
 
     data.userType = !isEmpty(data.userType) ? data.userType : "";
-    data.trainer = !isEmpty(data.trainer) ? data.trainer : "";
+    data.trainerId = !isEmpty(data.trainerId) ? data.trainerId : "";
     data.about = !isEmpty(data.about) ? data.about : "";
 
 
