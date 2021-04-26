@@ -9,6 +9,7 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
+
 // @route POST api/users/register
 // @desc Register user
 // @access Public
@@ -28,8 +29,6 @@ router.get("/trainers", async (req, res) => {
     try {
         const trainer = await User.find({userType : "Trainer"})
         res.send(trainer)
-
-
     }
     catch (error) {
         console.error(error.message)
@@ -86,6 +85,7 @@ router.post("/register", (req, res) => {
         }
     });
 });
+
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
@@ -110,7 +110,8 @@ router.post("/login", (req, res) => {
                 // User matched
                 // Create JWT Payload
                 const payload = {
-                    id: user.id,
+                    _id: user._id,
+                    password: user.password,
                     name: user.name,
                     email:user.email,
                     gender:user.gender,
@@ -143,4 +144,71 @@ router.post("/login", (req, res) => {
         });
     });
 });
+
+//Adarsh's code
+router.put("/:userId", async (req, res) => {
+    try {
+        const userId = req.params['userId'];
+        const user = await User.updateOne({"_id":userId},{'$set':{
+                'name':req.body.name,
+                'password':req.body.password,
+                'dateOfBirth':req.body.dateOfBirth,
+                'gender': req.body.gender,
+                'weightInKgs':req.body.weightInKgs,
+                'heightInCms':req.body.heightInCms,
+                'about':req.body.about
+            }})
+        res.send(user)
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
+router.get("/:trainerId/trainees", async (req, res) => {
+    try {
+        const userId = req.params['trainerId'];
+        const user = await User.find({trainerId:userId})
+        res.send(user)
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
+
+// @route POST api/users/register
+// @desc Register user
+// @access Public
+// router.put("/profile", (req, res) => {
+//     // Form validation
+//     //const { errors, isValid } = validateRegisterInput(req.body);
+// // Check validation
+// //     if (!isValid) {
+// //         return res.status(400).json(errors);
+// //     }
+//
+//     User.findOne({ email: req.body.email }).then(user => {
+//         if (user) {
+//                 user.name= req.body.name
+//                 user.email= req.body.email
+//                 //user.password= req.body.password
+//                 user.userType= req.body.userType
+//
+// // Hash password before saving in database
+//             bcrypt.genSalt(10, (err, salt) => {
+//                 bcrypt.hash(user.password, salt, (err, hash) => {
+//                     if (err) throw err;
+//                     user.password = hash;
+//                     user.save()
+//                         .then(user => res.json(user))
+//                         .catch(err => console.log(err));
+//                 });
+//             });
+//         } else {
+//             return res.status(400).json({ email: "Email does not exists!!!" });
+//         }
+//     });
+// });
+
 module.exports = router;
