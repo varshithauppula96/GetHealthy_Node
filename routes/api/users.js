@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get("/:trainer", async (req, res) => {
+router.get("/trainers", async (req, res) => {
     try {
         const trainer = await User.find({userType : "Trainer"})
         res.send(trainer)
@@ -69,7 +69,7 @@ router.post("/register", (req, res) => {
                 weightInKgs:req.body.weightInKgs,
                 heightInCms:req.body.heightInCms,
                 userType:req.body.userType,
-                trainer:req.body.trainer,
+                trainerId:req.body.trainerId,
                 about:req.body.about
             });
 // Hash password before saving in database
@@ -118,7 +118,7 @@ router.post("/login", (req, res) => {
                     weightInKgs:user.weightInKgs,
                     heightInCms:user.heightInCms,
                     userType:user.userType,
-                    trainer:user.trainer,
+                    trainerId:user.trainerId,
                     about:user.about
                 };
 // Sign token
