@@ -28,4 +28,16 @@ router.post("/", async (req, res) => {
     }
 })
 
+router.delete("/:foodId", async (req, res) => {
+    try {
+        const foodId = req.params['foodId'];
+        const foodEntry = await FoodTracker.remove({_id:foodId})
+        res.send(foodEntry)
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
+
 module.exports = router;
