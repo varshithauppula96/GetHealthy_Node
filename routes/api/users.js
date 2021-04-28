@@ -240,6 +240,7 @@ router.post("/profile", async (req, res) => {
                 userType: req.body.userType
             }
         })
+        res.send(user);
         console.log(user);
     } catch (error) {
         console.error(error.message)

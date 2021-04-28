@@ -32,7 +32,7 @@ const UserSchema = new Schema({
     },
     trainerId:{
         type:String,
-        required: true
+
     },
     about:{
         type:String
