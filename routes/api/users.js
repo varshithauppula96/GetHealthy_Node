@@ -47,11 +47,25 @@ router.get("/profile", async (req, res) => {
     }
 })
 
+router.get("/trainers/:trainerId", async (req, res) => {
+    try {
+        const {trainerId} = req.params['trainerId']
+        const trainer = await User.findById(trainerId)
+
+        res.json(trainer)
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
+
+
 router.get("/:userId", async (req, res) => {
     try {
         const userId = req.params['userId'];
         const user = await User.findById(userId)
-
+        console.log(user)
         res.send(user)
     }
     catch (error) {
@@ -59,6 +73,7 @@ router.get("/:userId", async (req, res) => {
         res.status(500).send("Server Error")
     }
 })
+
 router.post("/register", (req, res) => {
     // Form validation
     const { errors, isValid } = validateRegisterInput(req.body);
