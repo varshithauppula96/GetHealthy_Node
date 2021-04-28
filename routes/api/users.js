@@ -221,25 +221,26 @@ router.get("/:trainerId/trainees", async (req, res) => {
 //         }
 //     });
 // });
-router.put("/profile", async (req, res) => {
+
+router.post("/profile", async (req, res) => {
     try {
+
         const userId = req.body._id;
         console.log(userId)
         const user = await User.updateOne({_id: userId}, {
             $set: {
-                name: req.body.name
-                // dateOfBirth: req.body.dateOfBirth,
-                // gender: req.body.gender,
-                // weightInKgs: req.body.weightInKgs,
-                // heightInCms: req.body.heightInCms,
-                // about: req.body.about,
-                // email: req.body.email,
-                // trainerId: req.body.trainerId,
-                // userType: req.body.userType
+                name: req.body.name,
+                dateOfBirth: req.body.dateOfBirth,
+                gender: req.body.gender,
+                weightInKgs: req.body.weightInKgs,
+                heightInCms: req.body.heightInCms,
+                about: req.body.about,
+                email: req.body.email,
+                trainerId: req.body.trainerId,
+                userType: req.body.userType
             }
         })
         console.log(user);
-        res.send(user);
     } catch (error) {
         console.error(error.message)
         res.status(500).send("Server Error")
