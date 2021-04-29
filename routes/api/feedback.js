@@ -12,6 +12,20 @@ router.get("/", async (req, res) => {
         res.status(500).send("Server Error")
     }
 })
+
+router.get("/users/:userId", async (req, res) => {
+    try {
+        const user = req.params["userId"]
+        const feedback = await Feedback.find({userId:user}).sort({"createdAt":-1})
+        // console.log(feedback)
+        res.send(feedback)
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Server Error")
+    }
+})
+
 router.get("/:trainerId", async (req, res) => {
     try {
         const trainer = req.params['trainerId'];
