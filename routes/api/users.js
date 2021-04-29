@@ -8,7 +8,7 @@ const keys = require("../../config/keys");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 // Load User model
-const User = require("../../models/User");
+const User = require("../../models/user");
 
 // @route POST api/users/register
 // @desc Register user
@@ -65,7 +65,6 @@ router.get("/:userId", async (req, res) => {
     try {
         const userId = req.params['userId'];
         const user = await User.findById(userId)
-        console.log(user)
         res.send(user)
     }
     catch (error) {
@@ -237,30 +236,82 @@ router.get("/:trainerId/trainees", async (req, res) => {
 //     });
 // });
 
-router.post("/profile", async (req, res) => {
+router.put("/profile/:userId", async (req, res) => {
     try {
-
-        const userId = req.body._id;
-        console.log(userId)
-        const user = await User.updateOne({_id: userId}, {
-            $set: {
-                name: req.body.name,
-                dateOfBirth: req.body.dateOfBirth,
-                gender: req.body.gender,
-                weightInKgs: req.body.weightInKgs,
-                heightInCms: req.body.heightInCms,
-                about: req.body.about,
-                email: req.body.email,
-                trainerId: req.body.trainerId,
-                userType: req.body.userType
-            }
-        })
-        res.send(user);
-        console.log(user);
-    } catch (error) {
+        const userId = req.params['userId'];
+        const user = await User.updateOne({"_id":userId},{'$set':{
+                'name':req.body.name,
+                'dateOfBirth':req.body.dateOfBirth,
+                'gender': req.body.gender,
+                'weightInKgs':req.body.weightInKgs,
+                'heightInCms':req.body.heightInCms,
+                'about':req.body.about
+            }})
+        console.log("updation===" + user)
+        res.send(user)
+    }
+    catch (error) {
         console.error(error.message)
         res.status(500).send("Server Error")
     }
-});
+})
+
+// router.put("/profile/:userId", async (req, res) => {
+//     try {
+//         const userId = req.params['userId'];
+//         console.log("useriD is = ===== " + userId)
+//         User.updateOne({_id: userId}, {
+//             $set: {
+//                 name: req.body.name,
+//                 gender: req.body.gender,
+//                 weightInKgs: req.body.weightInKgs,
+//                 heightInCms: req.body.heightInCms,
+//                 about: req.body.about,
+//             }
+//         })
+//
+//         const user = await User.findById(userId)
+//         console.log("Updated user====" + user)
+//         res.send(user)
+//
+//
+//
+//         //     .then(user => {
+//         //     // Create JWT Payload
+//         //     const payload = {
+//         //         _id: user._id,
+//         //         password: user.password,
+//         //         name: user.name,
+//         //         email: user.email,
+//         //         gender: user.gender,
+//         //         dateOfBirth: user.dateOfBirth,
+//         //         weightInKgs: user.weightInKgs,
+//         //         heightInCms: user.heightInCms,
+//         //         userType: user.userType,
+//         //         trainerId: user.trainerId,
+//         //         about: user.about
+//         //     };
+//         //     console.log("user created" + JSON.stringify(user))
+//         //     // Sign token
+//         //     jwt.sign(
+//         //         payload,
+//         //         keys.secretOrKey,
+//         //         {
+//         //             expiresIn: 31556926 // 1 year in seconds
+//         //         },
+//         //         (err, token) => {
+//         //             res.json({
+//         //                 success: true,
+//         //                 token: "Bearer " + token
+//         //             });
+//         //         }
+//         //     );
+//         // });
+//     }
+//     catch (error) {
+//         console.error(error.message)
+//         res.status(500).send("Server Error")
+//     }
+// })
 
 module.exports = router;
